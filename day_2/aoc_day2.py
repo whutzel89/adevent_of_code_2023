@@ -1,5 +1,8 @@
-def test(file_path):
-    
+def test(file_in):
+    file1 = open(file_in, 'r')
+    Lines = file1.readlines()
+    sum = 0
 
-if __name__ == "__main__":
-    test('/Users/whutzel/local_code/development/python/aoc_2023/day_2/example1.txt')
+    for line in Lines:
+        game = line.split(':')[0].split(' ')[1]
+        color = line.replace(';',',').split(': ')[1].split(', ')
