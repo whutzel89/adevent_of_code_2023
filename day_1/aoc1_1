@@ -1,0 +1,105 @@
+'''
+    THis is 2 solutions to the advent of code day 1 problem 1
+'''
+def replace_nums2(input_string):
+    '''
+        this is a simple solution to day 1 just using replace functions to find strings and replace with a numeric string that
+        can be caught in the main test function. there is likely a  more generic way that can be implemented using a
+        list and a loop
+    '''
+    input_string = input_string.replace('one', 'o1ne')
+    input_string = input_string.replace('two', 't2wo')
+    input_string = input_string.replace('three', 't3hree')
+    input_string = input_string.replace('four', 'f4our')
+    input_string = input_string.replace('five', 'f5ive')
+    input_string = input_string.replace('six', 's6ix')
+    input_string = input_string.replace('seven', 's7even')
+    input_string = input_string.replace('eight', 'e8ight')
+    input_string = input_string.replace('nine', 'n9ine')
+    input_string = input_string.replace('zero', 'z0ero')
+
+    return input_string
+
+def replace_nums(input_string):
+    '''
+        This is a somew what convuluted method for findinf
+    '''
+    mindex_list = {}
+    mandex_list = {}
+    nums = {'zero':'0',
+            'one':'1',
+            'two':'2',
+            'three':'3',
+            'four':'4',
+            'five':'5',
+            'six':'6',
+            'seven':'7',
+            'eight':'8',
+            'nine':'9'}
+
+    # we are looking for index of first occurence of string one ... nine and last occurence of these strings
+    for key,val in nums.items():
+        try:
+            mindex_list[key] = input_string.index(key)
+            mandex_list[key] = input_string.rfind(key)
+        except:
+            place_holder = ''
+    try:
+        min_key = min(mindex_list,key=mindex_list.get)
+        temp = list(input_string)
+        temp[input_string.index(min_key)+1] = nums[min_key]
+        input_string = ''.join(temp)
+    except:
+        place_holder = ''
+
+    # here we are replacing the strings one, ..., nine with o1e, t2o, ..., n9ne so we can catch them in the test string
+    try:
+        if input_string.rfind(max(mandex_list, key=mandex_list.get)) != -1:
+            max_key = max(mandex_list, key=mandex_list.get)
+            temp2 = list(input_string)
+            temp2[input_string.rfind(max_key)+1] = nums[max_key]
+            input_string = ''.join(temp2)
+    except:
+        place_holder = ''
+
+    return input_string
+
+
+def test(file_in):
+    file1 = open(file_in, 'r')
+    Lines = file1.readlines()
+    sum = 0
+
+    # this loops through and finds first and lost occurence of 1, 2, ..., 9
+    for line in Lines:
+        first_digit = -1
+        last_digit = -1
+        line= replace_nums(line) # this can also be subbed out for replace_nums2
+        for char in line:
+            if char.isdigit():
+                if first_digit == -1:
+                    first_digit = int(char)
+                    last_digit = int(char)
+                else:
+                    last_digit = int(char)
+        print(10*first_digit + last_digit)
+        sum += 10*first_digit + last_digit
+
+    print(sum)
+
+if __name__ == "__main__":
+    # 54322 too high
+    # 53410 too high
+    # 53391
+    # 53396
+    # 53103
+    # 53223
+    # 53407
+    # 53393
+    # 53459
+    # 53393 + 54338
+    # 53389 is the right number
+    test('/Users/whutzel/local_code/development/python/aoc_2023/day_1/star2.txt')
+    #test('/Users/whutzel/local_code/development/python/aoc_2023/day_1/examp_in.txt')
+    #test('/Users/whutzel/local_code/development/python/aoc_2023/day_1/star_2_in.txt')
+    #test('/Users/whutzel/local_code/development/python/aoc_2023/day_1/examp_in2.txt')
