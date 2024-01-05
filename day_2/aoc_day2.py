@@ -1,3 +1,34 @@
+def test2(file_in):
+    file1 = open(file_in, 'r')
+    Lines = file1.readlines()
+    thresholds = {
+        'red' : 13,
+        'green' : 14,
+        'blue' : 15
+    }
+    sum = 0
+
+    for line in Lines:
+        truth_list = []
+        game_dict = {'red':[],'blue':[],'green':[]}
+        game = int(line.split(':')[0].split(' ')[1])
+        colors = line.replace(';',',').split(': ')[1].split(', ')
+        temp = [game_dict[color.split(' ')[1].replace('\n','')].append(int(color.split(' ')[0])) for color in colors]
+        max_list = [max(game_dict[key]) for key in game_dict.keys()]
+        tot = 1
+        #print(game_dict)
+        for i in max_list:
+            tot *= i
+        #print(tot)
+        sum += tot
+        
+
+    print(sum)
+        #print(truth_list)
+        #print(game_dict)
+        #print(int(color.split(' ')[0]))
+        # use generator to make list with true or flase for colors above (false) or below a given value (true)
+
 def test(file_in):
     file1 = open(file_in, 'r')
     Lines = file1.readlines()
@@ -25,5 +56,6 @@ def test(file_in):
         # use generator to make list with true or flase for colors above (false) or below a given value (true)
 
 if __name__ == "__main__":
-    #test('/Users/whutzel/local_code/development/python/aoc_2023/day_2/example1.txt')
-    test('/Users/whutzel/local_code/development/python/aoc_2023/day_2/star1.txt')
+    #test2('/Users/whutzel/local_code/development/python/aoc_2023/day_2/example1.txt')
+    test2('/Users/whutzel/local_code/development/python/aoc_2023/day_2/input2.txt')
+    #test2('/Users/whutzel/local_code/development/python/aoc_2023/day_2/star1.txt')
